@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "c5f923d3-3ee5-4344-be67-47ff77b75c6a",
+		"name": "Demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/echo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"hello\": \"world\",\r\n    \"to\": [\"{{host2}}/call/\",\"{{host}}/echo/\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/call/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"call",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/call",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"hello\": \"world\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/echo",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"echo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/wait",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"hello\": \"world\",\r\n    \"to\": [\"{{host2}}/call/\",\"{{host}}/echo/\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/wait/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"wait",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"pm.globals.set(\"loadUtil\", function loadUtil() {",
+					"",
+					"  let inst = {};",
+					"",
+					"  inst.leftPad = function(fill, size, text) {",
+					"    if(!text) text = \"\";",
+					"",
+					"    for(i=text.length; i < size; ++i)",
+					"      text = fill + text;",
+					"",
+					"    return text;",
+					"  };",
+					"",
+					"  inst.rightPad = function(fill, size, text) {",
+					"    if(!text) text = \"\";",
+					"",
+					"    for(i=text.length; i < size; ++i)",
+					"      text = text + fill;",
+					"",
+					"    return text;",
+					"  };",
+					"",
+					"  inst.str = function(val) {",
+					"    return \"\" + val;",
+					"  };",
+					"",
+					"  inst.formatTime = function(dt) {",
+					"    dt = dt || new Date();",
+					"",
+					"    return inst.leftPad('0', 4, inst.str(dt.getFullYear()))",
+					"         + inst.leftPad('0', 2, inst.str(dt.getMonth() + 1))",
+					"         + inst.leftPad('0', 2, inst.str(dt.getDate()))",
+					"         + inst.leftPad('0', 2, inst.str(dt.getHours()))",
+					"         + inst.leftPad('0', 2, inst.str(dt.getMinutes()))",
+					"         + inst.leftPad('0', 2, inst.str(dt.getSeconds()));",
+					"  };",
+					"",
+					"  inst.formatJapanTime = function(dt) {",
+					"    dt = dt || new Date();",
+					"    dt.setHours(dt.getHours() + 2);",
+					"    return inst.formatTime(dt);",
+					"  };",
+					"",
+					"  inst.newRefundID = function() {",
+					"    return \"refn\" + (new Date()).getTime();",
+					"  };",
+					"  ",
+					"  inst.newRequestID = function() {",
+					"    return \"fake\" + (new Date()).getTime();",
+					"  };",
+					"",
+					"  inst.newReceiptNO = function() {",
+					"    return \"recp\" + (new Date()).getTime();",
+					"  };",
+					"",
+					"  return inst;",
+					"",
+					"} + \"; loadUtil();\");",
+					"",
+					"//------------------------------------------------------------",
+					"",
+					"pm.globals.set(\"host\", \"http://localhost:8010\");",
+					"pm.globals.set(\"host2\", \"http://localhost:8020\");",
+					"",
+					"//------------------------------------------------------------",
+					"",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
